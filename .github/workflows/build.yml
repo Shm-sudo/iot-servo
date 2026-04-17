@@ -12,14 +12,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
-          # 安装旧版 autoconf 和 libtool 以兼容 libffi
-          sudo apt install -y autoconf2.69 libtool-bin
-          # 创建符号链接使 autoconf2.69 成为默认
-          sudo ln -sf /usr/bin/autoconf2.69 /usr/bin/autoconf
-          sudo ln -sf /usr/bin/autoheader2.69 /usr/bin/autoheader
-          sudo ln -sf /usr/bin/autom4te2.69 /usr/bin/autom4te
-          sudo ln -sf /usr/bin/autoreconf2.69 /usr/bin/autoreconf
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev autoconf-archive
           pip install buildozer Cython
       - name: Build with Buildozer
         run: |
