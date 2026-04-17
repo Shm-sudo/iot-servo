@@ -1,22 +1,16 @@
 name: Build APK
 on: [push, workflow_dispatch]
+
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Build with Buildozer Action
+        uses: kivy/buildozer-action@main
         with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev autoconf-archive
-          pip install buildozer Cython
-      - name: Build with Buildozer
-        run: |
-          buildozer android debug
+          workdir: .
+          buildozer_spec: buildozer.spec
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
