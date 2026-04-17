@@ -2,18 +2,22 @@ name: Build APK with Docker
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  build-with-docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build APK using official Buildozer Docker image
-        run: |
-          # 使用 kivy/buildozer 官方镜像进行构建
-          docker run --rm -v $PWD:/app -w /app kivy/buildozer buildozer android debug
-          
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: bin/*.apk
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build APK using official Buildozer Docker image
+      run: |
+        docker run --rm \
+          -e BUILDOZER_ALLOW_ROOT=1 \
+          -v ${{ github.workspace }}:/app \
+          -w /app \
+          kivy/buildozer buildozer android debug
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-debug
+        path: bin/*.apk
