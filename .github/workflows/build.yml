@@ -1,4 +1,4 @@
-name: Build APK
+name: Build APK with Docker
 on: [push, workflow_dispatch]
 
 jobs:
@@ -6,12 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build APK with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          # 指定你的 buildozer.spec 文件路径，一般为根目录
-          buildozer_spec: buildozer.spec
-      - name: Upload APK
+      
+      - name: Build APK using official Buildozer Docker image
+        run: |
+          # 使用 kivy/buildozer 官方镜像进行构建
+          docker run --rm -v $PWD:/app -w /app kivy/buildozer buildozer android debug
+          
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
