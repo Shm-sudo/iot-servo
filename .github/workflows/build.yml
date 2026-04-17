@@ -14,7 +14,7 @@ jobs:
           -e BUILDOZER_ALLOW_ROOT=1 \
           -v ${{ github.workspace }}:/app \
           -w /app \
-          kivy/buildozer buildozer android debug
+          kivy/buildozer android debug
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
