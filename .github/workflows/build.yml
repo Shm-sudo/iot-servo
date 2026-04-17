@@ -5,11 +5,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build with Buildozer Action
-        uses: kivy/buildozer-action@main
+      - uses: actions/checkout@v4
+      - name: Build APK with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          workdir: .
+          # 指定你的 buildozer.spec 文件路径，一般为根目录
           buildozer_spec: buildozer.spec
       - name: Upload APK
         uses: actions/upload-artifact@v4
